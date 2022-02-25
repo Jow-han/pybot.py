@@ -7,7 +7,10 @@ import time
 import os
 from config import token
 # GETS THE CLIENT OBJECT FROM DISCORD.PY. CLIENT IS SYNONYMOUS WITH BOT.
-bot = discord.Client()
+# bot = discord.Client()
+bot = commands.Bot(command_prefix="")
+# Insert your bot's token here.
+TOKEN = "OTM2NDIyNTg3MTEyNzcxNTk1.YfM9fg.wmBjp_50Z1t4kpfpajMkEr_aVYw"
 
 # EVENT LISTENER FOR WHEN THE BOT HAS SWITCHED FROM OFFLINE TO ONLINE.
 @bot.event
@@ -24,7 +27,19 @@ async def on_ready():
 
     # PRINTS HOW MANY GUILDS/SERVERS THE BOT IS IN
     print("PyBot is in" + str(guild_count) + "guilds.")
+
     await bot.change_presence(activity=discord.Game(name="Python 3 on VSCode"))
+
+    # Cogs code - start
+    for cog in os.listdir(r"cogs"): # Loop through each file in your "cogs" folder.
+      if cog.endswith(".py"):
+          try:
+              cog = f"cogs.{cog.replace('.py', '')}"
+              bot.load_extension(cog) # Load the file as an extension.
+          except Exception as e:
+              print(f"{cog} is failed to load:")
+              raise e
+    # Cogs code - end
 
 
 
@@ -170,11 +185,21 @@ async def on_message(message):
             voice = discord.utils.get(bot.voice_clients, guild=message.guild)
             voice.play(discord.FFmpegPCMAudio("audio/dimakafocus.mp3"))
             time.sleep(4)
+             # Sleep while audio is playing.
+            while voice.is_playing():
+                sleep(.1)
             await voice.disconnect()
             return
+
+            
+        # need to add this await command so Cog Commands can work.
+        # Without this, Cog Commands gets blocked.
+        # Source: https://stackoverflow.com/a/53706211/7209628
+        await bot.process_commands(message)
     except:
          await message.channel.send(message.author.mention + ', Teka error ako help')
-        
+
 
 # EXECUTES THE BOT WITH THE SPECIFIED TOKEN. 
 bot.run(token)
+

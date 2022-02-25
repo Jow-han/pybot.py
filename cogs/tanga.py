@@ -13,4 +13,3 @@ class Tanga(commands.Cog):
     
 def setup(bot):
   bot.add_cog(Tanga(bot))
-  print('Tanga is loaded!')
