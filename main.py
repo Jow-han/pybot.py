@@ -83,6 +83,7 @@ async def on_message(message):
     commands = [
         "dead","gelo cruz","the office","dead","cake","depressed"
     ]
+    
     try:
         if words == '99!':
             response = random.choice(brooklyn_99_quotes)
@@ -101,7 +102,8 @@ async def on_message(message):
             await voice_channel.connect()
             voice = discord.utils.get(bot.voice_clients, guild=message.guild)
             voice.play(discord.FFmpegPCMAudio("audio/gelocruz.mp3"))
-            time.sleep(6)
+            while voice.is_playing():
+                time.sleep(.1)
             await voice.disconnect()
             return
         if "low ranks" in words:
@@ -137,7 +139,8 @@ async def on_message(message):
                 await voice_channel.connect()
                 voice = discord.utils.get(bot.voice_clients, guild=message.guild)
                 voice.play(discord.FFmpegPCMAudio("audio/happynewyear.mp3"))
-                time.sleep(15)
+                while voice.is_playing():
+                    time.sleep(.1)
                 await voice.disconnect()
                 return
         elif words == "bully":
@@ -146,7 +149,8 @@ async def on_message(message):
             await voice_channel.connect()
             voice = discord.utils.get(bot.voice_clients, guild=message.guild)
             voice.play(discord.FFmpegPCMAudio("audio/gonnacry.mp3"))
-            time.sleep(4)
+            while voice.is_playing():
+                time.sleep(.1)
             await voice.disconnect()
             return
         elif words == "gameon":
@@ -155,7 +159,8 @@ async def on_message(message):
             await voice_channel.connect()
             voice = discord.utils.get(bot.voice_clients, guild=message.guild)
             voice.play(discord.FFmpegPCMAudio("audio/gaymoan.mp3"))
-            time.sleep(7)
+            while voice.is_playing():
+                time.sleep(.1)
             await voice.disconnect()
             return
         elif words == "mataba":
@@ -164,7 +169,8 @@ async def on_message(message):
             await voice_channel.connect()
             voice = discord.utils.get(bot.voice_clients, guild=message.guild)
             voice.play(discord.FFmpegPCMAudio("audio/fatfuck.mp3"))
-            time.sleep(7)
+            while voice.is_playing():
+                time.sleep(.1)
             await voice.disconnect()
             return
         elif words == "nigger":
@@ -173,7 +179,10 @@ async def on_message(message):
             await voice_channel.connect()
             voice = discord.utils.get(bot.voice_clients, guild=message.guild)
             voice.play(discord.FFmpegPCMAudio("audio/nigger.mp3"))
-            time.sleep(7)
+            #time.sleep(7)
+            #await voice.disconnect()
+            while voice.is_playing():
+                time.sleep(.1)
             await voice.disconnect()
             return
         elif words == "focus":
@@ -182,11 +191,12 @@ async def on_message(message):
             await voice_channel.connect()
             voice = discord.utils.get(bot.voice_clients, guild=message.guild)
             voice.play(discord.FFmpegPCMAudio("audio/dimakafocus.mp3"))
-            time.sleep(4)
-             # Sleep while audio is playing.
             while voice.is_playing():
-                sleep(.1)
+                time.sleep(.1)
             await voice.disconnect()
+            #time.sleep(4)
+             # Sleep while audio is playing.
+            
             return
 
             
