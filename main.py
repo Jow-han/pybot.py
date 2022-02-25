@@ -5,6 +5,7 @@ import random
 import time
 # Import the os module.
 import os
+from config import token
 # GETS THE CLIENT OBJECT FROM DISCORD.PY. CLIENT IS SYNONYMOUS WITH BOT.
 bot = discord.Client()
 
@@ -174,4 +175,4 @@ async def on_message(message):
         
 
 # EXECUTES THE BOT WITH THE SPECIFIED TOKEN. 
-bot.run("OTM2NDIyNTg3MTEyNzcxNTk1.YfM9fg.5n-0vX7v14kX6eYNR2DjBOuTj-o")
+bot.run(token)
