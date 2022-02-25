@@ -9,8 +9,6 @@ from config import token
 # GETS THE CLIENT OBJECT FROM DISCORD.PY. CLIENT IS SYNONYMOUS WITH BOT.
 # bot = discord.Client()
 bot = commands.Bot(command_prefix="")
-# Insert your bot's token here.
-TOKEN = "OTM2NDIyNTg3MTEyNzcxNTk1.YfM9fg.wmBjp_50Z1t4kpfpajMkEr_aVYw"
 
 # EVENT LISTENER FOR WHEN THE BOT HAS SWITCHED FROM OFFLINE TO ONLINE.
 @bot.event
