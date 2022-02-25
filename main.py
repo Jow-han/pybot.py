@@ -50,8 +50,7 @@ async def on_message(message):
     # changes message content into lowercase
     words=str.lower(message.content)
     #grab the user who sent the command
-    user = message.author
-    voice_channel = user.voice.channel
+    
         
         #voiceChannel = discord.utils.get(message.guild.voice_channels, name = voice_channel)
         #voice = discord.utils.get(bot.voice_clients, guild=message.guild)
@@ -85,6 +84,9 @@ async def on_message(message):
     ]
     
     try:
+        user = message.author
+        voice_channel = user.voice.channel
+        
         if words == '99!':
             response = random.choice(brooklyn_99_quotes)
             await message.channel.send(response)
@@ -106,7 +108,7 @@ async def on_message(message):
                 time.sleep(.1)
             await voice.disconnect()
             return
-        if "low ranks" in words:
+        elif "low ranks" in words:
             await message.channel.send("Low rank ka naman" + message.author.mention)
         if "need" in words:
             await message.channel.send("Need mo ng susubo ng burat?")
@@ -134,18 +136,14 @@ async def on_message(message):
         elif 'wag' in words:
             await message.channel.send("https://images-ext-2.discordapp.net/external/rMF7uHkVpovUDZTQnHo4XAfudHHZHigLYJPa8ZW3Q98/https/i.pinimg.com/236x/c6/49/eb/c649eb07789ec9794983101fca8b01e7.jpg")
         elif words == 'happy new year':
-                user=message.author
-                voice_channel = user.voice.channel
-                await voice_channel.connect()
-                voice = discord.utils.get(bot.voice_clients, guild=message.guild)
-                voice.play(discord.FFmpegPCMAudio("audio/happynewyear.mp3"))
-                while voice.is_playing():
-                    time.sleep(.1)
-                await voice.disconnect()
-                return
+            await voice_channel.connect()
+            voice = discord.utils.get(bot.voice_clients, guild=message.guild)
+            voice.play(discord.FFmpegPCMAudio("audio/happynewyear.mp3"))
+            while voice.is_playing():
+                time.sleep(.1)
+            await voice.disconnect()
+            return
         elif words == "bully":
-            user=message.author
-            voice_channel = user.voice.channel
             await voice_channel.connect()
             voice = discord.utils.get(bot.voice_clients, guild=message.guild)
             voice.play(discord.FFmpegPCMAudio("audio/gonnacry.mp3"))
@@ -154,8 +152,6 @@ async def on_message(message):
             await voice.disconnect()
             return
         elif words == "gameon":
-            user=message.author
-            voice_channel = user.voice.channel
             await voice_channel.connect()
             voice = discord.utils.get(bot.voice_clients, guild=message.guild)
             voice.play(discord.FFmpegPCMAudio("audio/gaymoan.mp3"))
@@ -164,8 +160,6 @@ async def on_message(message):
             await voice.disconnect()
             return
         elif words == "mataba":
-            user=message.author
-            voice_channel = user.voice.channel
             await voice_channel.connect()
             voice = discord.utils.get(bot.voice_clients, guild=message.guild)
             voice.play(discord.FFmpegPCMAudio("audio/fatfuck.mp3"))
@@ -174,8 +168,6 @@ async def on_message(message):
             await voice.disconnect()
             return
         elif words == "nigger":
-            user=message.author
-            voice_channel = user.voice.channel
             await voice_channel.connect()
             voice = discord.utils.get(bot.voice_clients, guild=message.guild)
             voice.play(discord.FFmpegPCMAudio("audio/nigger.mp3"))
@@ -186,8 +178,6 @@ async def on_message(message):
             await voice.disconnect()
             return
         elif words == "focus":
-            user=message.author
-            voice_channel = user.voice.channel
             await voice_channel.connect()
             voice = discord.utils.get(bot.voice_clients, guild=message.guild)
             voice.play(discord.FFmpegPCMAudio("audio/dimakafocus.mp3"))
