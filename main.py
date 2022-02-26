@@ -1,6 +1,7 @@
 # IMPORT DISCORD.PY. ALLOWS ACCESS TO DISCORD'S API.
 import discord
 from discord.ext import commands
+from discord.ext.commands import CommandNotFound
 import random
 import time
 # Import the os module.
@@ -38,81 +39,24 @@ async def on_ready():
               print(f"{cog} is failed to load:")
               raise e
     # Cogs code - end
-# @bot.event
-# async def on_voice_state_update(member, before, after): 
-#     #if channel.id == "849184911863578665": #BoysLockerRoom 
-#     #if not before.channel and after.channel:
-#         #channel = channel.get_channel(849184911863578665) 
-#         #await channel.send("Hello welcome to BoysLockerRoom")
-#         if before.channel is None and after.channel is not None:
-#             if after.channel.id == [849184911863578665]:
-#                 await member.channel.send("Welcome to BoysLockerRoom")
 
 @bot.event
-async def on_voice_state_update(member, before, after):
-    nagUndeaf = before.self_deaf and not after.self_deaf
-    nagUnmute = before.self_mute and not after.self_mute
-    nagtanggalNgStream = before.self_stream and not after.self_stream
-    nagtanggalNgVideo = before.self_video and not after.self_video
-
-    # ignore nagUndeaf / nagUnmute
-    if nagUndeaf or nagUnmute:
+async def on_command_error(ctx, error):
+    if isinstance(error, CommandNotFound):
         return
-
-    # ignore nagDeaf / nagMute
-    if after.self_deaf or after.self_mute:
-        return
-
-    # ignore nagstream / nag-tanggal ng stream
-    if after.self_stream or nagtanggalNgStream:
-        return
-
-    # ignore nagturn-on ng video cam / nagtanggal ng video cam
-    if after.self_video or nagtanggalNgVideo:
-        return
-    
-    # ignore yung umalis ng Channel malamang tanga ka ba
-    if after.channel == None:
-        return
-    
-    # don't greet a bot
-    if member == bot.user: 
-        return
-
-    # hanapin ang "private-chat" Text Channel
-    channel_found = None
-    for channel in member.guild.channels:
-        if "private-chat" in channel.name:
-            channel_found = channel
-            # make sure na may message send lang kapag pumasok sa BoysLockerRoom 
-            if after.channel.name == "BoysLockerRoom":
-                # yung Channel object ang nakakapag .send(), this case si "private-chat"
-                await channel_found.send(f"Welcome to {after.channel.name} {member.mention}")
-            break
-        if "council-chat" in channel.name:
-            channel_found = channel
-            if after.channel.name == "Extreme High Council":
-                await channel_found.send(f"Welcome to {after.channel.name} {member.mention}")
-            break
-        #if  channel.name.__contains__("main-chat"):
-        #    channel_found = channel
-        #    if after.channel.name.__contains__("Ranked ng Smurf"):
-        #        await channel_found.send(f"Welcome to {after.channel.name} {member.mention} stream mo naman lods sayang boost")
-        #    break
+    raise error
 
 #EVENT LISTENER FOR WHEN A NEW MESSAGE IS SENT TO A CHANNEL
 @bot.event
 async def on_message(message):
     if message.author.bot:
         return 
+
     # changes message content into lowercase
-    words=str.lower(message.content)
-    #grab the user who sent the command
-    
-        
-        #voiceChannel = discord.utils.get(message.guild.voice_channels, name = voice_channel)
-        #voice = discord.utils.get(bot.voice_clients, guild=message.guild)
-        
+    words = str.lower(message.content)
+    # grab the user who sent the command
+    # voiceChannel = discord.utils.get(message.guild.voice_channels, name = voice_channel)
+    # voice = discord.utils.get(bot.voice_clients, guild=message.guild)
         
     brooklyn_99_quotes = [
         'I\'m the human form of the 💯 emoji.',
@@ -148,10 +92,6 @@ async def on_message(message):
         if words == '99!':
             response = random.choice(brooklyn_99_quotes)
             await message.channel.send(response)
-        # CHECKS IF THE MESSAGE THAT WAS SENT IS EQUAL TO "HELLO".
-        if words == "hello":
-            # SENDS BACK A MESSAGE TO THE CHANNEL.
-            await message.channel.send("hello ka rin")
         elif words == "best porn producer in ph":
             await message.channel.send("Vivamax films")
         elif "ayun" in words:
@@ -189,22 +129,12 @@ async def on_message(message):
             await message.channel.send("https://c.tenor.com/rv_QpUUUW0sAAAAC/dwight-the-office.gif")
         elif words == "command list" or words == "pybot commands":
             await message.channel.send(commands)
-        elif words == 'dogstyle':
-            await message.channel.send("https://media.discordapp.net/attachments/819854712576409600/820110846512463882/unknown.png")
         elif 'wag' in words:
             await message.channel.send("https://images-ext-2.discordapp.net/external/rMF7uHkVpovUDZTQnHo4XAfudHHZHigLYJPa8ZW3Q98/https/i.pinimg.com/236x/c6/49/eb/c649eb07789ec9794983101fca8b01e7.jpg")
         elif words == 'happy new year':
             await voice_channel.connect()
             voice = discord.utils.get(bot.voice_clients, guild=message.guild)
             voice.play(discord.FFmpegPCMAudio("audio/happynewyear.mp3"))
-            while voice.is_playing():
-                time.sleep(.1)
-            await voice.disconnect()
-            return
-        elif words == "bully":
-            await voice_channel.connect()
-            voice = discord.utils.get(bot.voice_clients, guild=message.guild)
-            voice.play(discord.FFmpegPCMAudio("audio/gonnacry.mp3"))
             while voice.is_playing():
                 time.sleep(.1)
             await voice.disconnect()
@@ -217,24 +147,6 @@ async def on_message(message):
                 time.sleep(.1)
             await voice.disconnect()
             return
-        elif words == "mataba":
-            await voice_channel.connect()
-            voice = discord.utils.get(bot.voice_clients, guild=message.guild)
-            voice.play(discord.FFmpegPCMAudio("audio/fatfuck.mp3"))
-            while voice.is_playing():
-                time.sleep(.1)
-            await voice.disconnect()
-            return
-        elif words == "nigger":
-            await voice_channel.connect()
-            voice = discord.utils.get(bot.voice_clients, guild=message.guild)
-            voice.play(discord.FFmpegPCMAudio("audio/nigger.mp3"))
-            #time.sleep(7)
-            #await voice.disconnect()
-            while voice.is_playing():
-                time.sleep(.1)
-            await voice.disconnect()
-            return
         elif words == "focus":
             await voice_channel.connect()
             voice = discord.utils.get(bot.voice_clients, guild=message.guild)
@@ -242,17 +154,12 @@ async def on_message(message):
             while voice.is_playing():
                 time.sleep(.1)
             await voice.disconnect()
-            #time.sleep(4)
-             # Sleep while audio is playing.
-            
             return
 
             
         # need to add this await command so Cog Commands can work.
         # Without this, Cog Commands gets blocked.
         # Source: https://stackoverflow.com/a/53706211/7209628
-        if message.author.bot:
-            return 
         await bot.process_commands(message)
     except:
          await message.channel.send(message.author.mention + ', Teka error ako help')
