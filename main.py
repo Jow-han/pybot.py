@@ -50,10 +50,10 @@ async def on_ready():
 
 @bot.event
 async def on_voice_state_update(member, before, after):
-    nagUndeaf = (before.self_deaf and not after.self_deaf)
-    nagUnmute = (before.self_mute and not after.self_mute)
-    nagtanggalNgStream = (before.self_stream and not after.self_stream)
-    nagtanggalNgVideo = (before.self_video and not after.self_video)
+    nagUndeaf = before.self_deaf and not after.self_deaf
+    nagUnmute = before.self_mute and not after.self_mute
+    nagtanggalNgStream = before.self_stream and not after.self_stream
+    nagtanggalNgVideo = before.self_video and not after.self_video
 
     # ignore nagUndeaf / nagUnmute
     if nagUndeaf or nagUnmute:
@@ -87,10 +87,18 @@ async def on_voice_state_update(member, before, after):
             # make sure na may message send lang kapag pumasok sa BoysLockerRoom 
             if after.channel.name == "BoysLockerRoom":
                 # yung Channel object ang nakakapag .send(), this case si "private-chat"
-                await channel_found.send(f"haha pumasok test lang bobo {member.mention}")
+                await channel_found.send(f"Welcome to {after.channel.name} {member.mention}")
             break
-        
-
+        if "council-chat" in channel.name:
+            channel_found = channel
+            if after.channel.name == "Extreme High Council":
+                await channel_found.send(f"Welcome to {after.channel.name} {member.mention}")
+            break
+        #if  channel.name.__contains__("main-chat"):
+        #    channel_found = channel
+        #    if after.channel.name.__contains__("Ranked ng Smurf"):
+        #        await channel_found.send(f"Welcome to {after.channel.name} {member.mention} stream mo naman lods sayang boost")
+        #    break
 
 #EVENT LISTENER FOR WHEN A NEW MESSAGE IS SENT TO A CHANNEL
 @bot.event
