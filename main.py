@@ -38,7 +38,15 @@ async def on_ready():
               print(f"{cog} is failed to load:")
               raise e
     # Cogs code - end
-
+@bot.event
+async def on_voice_state_update(member, before, after): 
+    #if channel.id == "849184911863578665": #BoysLockerRoom 
+    #if not before.channel and after.channel:
+        #channel = channel.get_channel(849184911863578665) 
+        #await channel.send("Hello welcome to BoysLockerRoom")
+        if before.channel is None and after.channel is not None:
+            if after.channel.id == [849184911863578665]:
+                await member.channel.send("Welcome to BoysLockerRoom")
 
 
 #EVENT LISTENER FOR WHEN A NEW MESSAGE IS SENT TO A CHANNEL
@@ -196,6 +204,7 @@ async def on_message(message):
         await bot.process_commands(message)
     except:
          await message.channel.send(message.author.mention + ', Teka error ako help')
+
 
 
 # EXECUTES THE BOT WITH THE SPECIFIED TOKEN. 
