@@ -24,7 +24,7 @@ async def on_ready():
         guild_count = guild_count + 1
 
     # PRINTS HOW MANY GUILDS/SERVERS THE BOT IS IN
-    print("PyBot is in" + str(guild_count) + "guilds.")
+    print("PyBot is in " + str(guild_count) + " guilds.")
 
     await bot.change_presence(activity=discord.Game(name="Python 3 on VSCode"))
 
@@ -38,19 +38,61 @@ async def on_ready():
               print(f"{cog} is failed to load:")
               raise e
     # Cogs code - end
+# @bot.event
+# async def on_voice_state_update(member, before, after): 
+#     #if channel.id == "849184911863578665": #BoysLockerRoom 
+#     #if not before.channel and after.channel:
+#         #channel = channel.get_channel(849184911863578665) 
+#         #await channel.send("Hello welcome to BoysLockerRoom")
+#         if before.channel is None and after.channel is not None:
+#             if after.channel.id == [849184911863578665]:
+#                 await member.channel.send("Welcome to BoysLockerRoom")
+
 @bot.event
-async def on_voice_state_update(member, before, after): 
-    #if channel.id == "849184911863578665": #BoysLockerRoom 
-    #if not before.channel and after.channel:
-        #channel = channel.get_channel(849184911863578665) 
-        #await channel.send("Hello welcome to BoysLockerRoom")
-        if before.channel is None and after.channel is not None:
-            if after.channel.id == [849184911863578665]:
-                await member.channel.send("Welcome to BoysLockerRoom")
+async def on_voice_state_update(member, before, after):
+    nagUndeaf = (before.self_deaf and not after.self_deaf)
+    nagUnmute = (before.self_mute and not after.self_mute)
+    nagtanggalNgStream = (before.self_stream and not after.self_stream)
+    nagtanggalNgVideo = (before.self_video and not after.self_video)
+
+    # ignore nagUndeaf / nagUnmute
+    if nagUndeaf or nagUnmute:
+        return
+
+    # ignore nagDeaf / nagMute
+    if after.self_deaf or after.self_mute:
+        return
+
+    # ignore nagstream / nag-tanggal ng stream
+    if after.self_stream or nagtanggalNgStream:
+        return
+
+    # ignore nagturn-on ng video cam / nagtanggal ng video cam
+    if after.self_video or nagtanggalNgVideo:
+        return
+    
+    # ignore yung umalis ng Channel malamang tanga ka ba
+    if after.channel == None:
+        return
+    
+    # don't greet a bot
+    if member == bot.user: 
+        return
+
+    # hanapin ang "private-chat" Text Channel
+    channel_found = None
+    for channel in member.guild.channels:
+        if "private-chat" in channel.name:
+            channel_found = channel
+            # make sure na may message send lang kapag pumasok sa BoysLockerRoom 
+            if after.channel.name == "BoysLockerRoom":
+                # yung Channel object ang nakakapag .send(), this case si "private-chat"
+                await channel_found.send(f"haha pumasok test lang bobo {member.mention}")
+            break
+        
 
 
 #EVENT LISTENER FOR WHEN A NEW MESSAGE IS SENT TO A CHANNEL
-
 @bot.event
 async def on_message(message):
     if message.author == bot.user:
