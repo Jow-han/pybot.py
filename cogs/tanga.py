@@ -1,6 +1,5 @@
 import discord
 from discord.ext import commands
-
 class Tanga(commands.Cog):
   
   def __init__(self, bot):

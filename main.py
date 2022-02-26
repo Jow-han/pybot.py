@@ -103,7 +103,7 @@ async def on_voice_state_update(member, before, after):
 #EVENT LISTENER FOR WHEN A NEW MESSAGE IS SENT TO A CHANNEL
 @bot.event
 async def on_message(message):
-    if message.author == bot.user:
+    if message.author.bot:
         return 
     # changes message content into lowercase
     words=str.lower(message.content)
@@ -251,6 +251,8 @@ async def on_message(message):
         # need to add this await command so Cog Commands can work.
         # Without this, Cog Commands gets blocked.
         # Source: https://stackoverflow.com/a/53706211/7209628
+        if message.author.bot:
+            return 
         await bot.process_commands(message)
     except:
          await message.channel.send(message.author.mention + ', Teka error ako help')

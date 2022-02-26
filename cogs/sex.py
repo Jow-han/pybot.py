@@ -10,6 +10,8 @@ class Sex(commands.Cog):
   @commands.Cog.listener() # In cogs, to listen for events use .Cog.listener
   async def on_message(self, ctx): # You must not forget to pass "self" as the first parameter for functions inside classes.
     # We don't use "bot.something", we use "self.bot.something" in cogs.
+    if ctx.author == bot.user:
+        return 
     kantutan = ["sex", "torjack", "kantot"]
     words=str.lower(ctx.content)
     if words in kantutan:
@@ -19,7 +21,7 @@ class Sex(commands.Cog):
         voice = discord.utils.get(self.bot.voice_clients, guild= ctx.guild)
         voice.play(discord.FFmpegPCMAudio("audio/sex.mp3"))
         while voice.is_playing():
-            time.sleep(.1)
+          time.sleep(.1)
         await voice.disconnect()
     
     
