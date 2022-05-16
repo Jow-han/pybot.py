@@ -13,7 +13,7 @@ class Sex(commands.Cog):
     
     words=str.lower(ctx.content)
     if "totoo" in words:
-       await ctx.send("https://cdn.discordapp.com/attachments/849185224221786132/975583785741602816/asd.png")
+       await ctx.channel.send("https://cdn.discordapp.com/attachments/849185224221786132/975583785741602816/asd.png")
     
     
 def setup(bot):
